@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class InvertedSphere : EditorWindow
+public class TransparentInvertedSphere : EditorWindow
 {
 	private string st = "1.0";
 
-	[MenuItem("GameObject/Create Other/Inverted Sphere...")]
+	[MenuItem("GameObject/Create Other/Transparent Inverted Sphere...")]
 	public static void ShowWindow()
 	{
-		EditorWindow.GetWindow(typeof(InvertedSphere));
+		EditorWindow.GetWindow(typeof(TransparentInvertedSphere));
 	}
 
 	public void OnGUI()
@@ -19,20 +19,20 @@ public class InvertedSphere : EditorWindow
 		float f;
 		if (!float.TryParse(st, out f))
 			f = 1.0f;
-		if (GUILayout.Button("Create Inverted Sphere"))
+		if (GUILayout.Button("Create TransparentInvertedSphere  Sphere"))
 		{
-			CreateInvertedSphere(f);
+			CreateTransparentInvertedSphere(f);
 		}
 	}
 
-	private void CreateInvertedSphere(float size)
+	private void CreateTransparentInvertedSphere(float size)
 	{
 		GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 		MeshFilter mf = go.GetComponent<MeshFilter>();
 		Mesh mesh = mf.sharedMesh;
 
 		GameObject goNew = new GameObject();
-		goNew.name = "Inverted Sphere";
+		goNew.name = "Transparent Inverted Sphere";
 		MeshFilter mfNew = goNew.AddComponent<MeshFilter>();
 		mfNew.sharedMesh = new Mesh();
 
@@ -66,8 +66,7 @@ public class InvertedSphere : EditorWindow
 
 		// Add the same material that the original sphere used
 		MeshRenderer mr = goNew.AddComponent<MeshRenderer>();
-		mr.sharedMaterial = go.GetComponent<Renderer>().sharedMaterial;
-	//	mr.sharedMaterial = new Material (Shader.Find ("Transparent"));
+		mr.sharedMaterial = new Material (Shader.Find ("Unlit/Transparent"));
 		DestroyImmediate(go);
 	}
 }

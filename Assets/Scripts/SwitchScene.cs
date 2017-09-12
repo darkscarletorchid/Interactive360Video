@@ -12,8 +12,8 @@ public class SwitchScene : MonoBehaviour {
 	}
 
 	public void LoadNextScene() {
-		//SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
-		Application.LoadLevel(sceneName);
+		SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+		//Application.LoadLevel(sceneName);
 
 	}
 }

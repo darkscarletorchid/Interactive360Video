@@ -17,14 +17,23 @@ VideoClipImporter:
   colorSpace: 0
   deinterlace: 0
   sourceFileSize: 1825873
-  encodeAlpha: 0
+  encodeAlpha: 1
   sourceHasAlpha: 1
   flipVertical: 0
   flipHorizontal: 0
   importAudio: 0
   sourceAudioChannelCount: 
   sourceAudioSampleRate: 
-  targetSettings: {}
+  targetSettings:
+    0:
+      enableTranscoding: 0
+      codec: 0
+      resizeFormat: 0
+      aspectRatio: 0
+      customWidth: 4096
+      customHeight: 2048
+      bitrateMode: 2
+      spatialQuality: 2
   output:
     format: 4
     settings:
