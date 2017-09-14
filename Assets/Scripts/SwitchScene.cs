@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SwitchScene : MonoBehaviour {
+public class SwitchScene : MonoBehaviour, TimedInputHandler {
 
 	public string sceneName;
 
@@ -11,7 +11,7 @@ public class SwitchScene : MonoBehaviour {
 
 	}
 
-	public void LoadNextScene() {
+	public void HandleTimedInput() {
 		SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
 		//Application.LoadLevel(sceneName);
 

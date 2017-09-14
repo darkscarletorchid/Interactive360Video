@@ -28,7 +28,7 @@ public class GvrReticlePointer : GvrBasePointer {
   public const float RETICLE_GROWTH_ANGLE = 1.5f;
 
   // Minimum distance of the reticle (in meters).
-  public const float RETICLE_DISTANCE_MIN = 0.45f;
+  public const float RETICLE_DISTANCE_MIN = 0.0f; //o.45f
   // Maximum distance of the reticle (in meters).
   public const float RETICLE_DISTANCE_MAX = 10.0f;
 
@@ -43,6 +43,9 @@ public class GvrReticlePointer : GvrBasePointer {
   /// Default value 32767 ensures gaze reticle is always rendered on top.
   [Range(-32767, 32767)]
   public int reticleSortingOrder = 32767;
+
+	private float gazeStartTime;
+	private GameObject gazedAt;
 
   public Material MaterialComp { private get; set; }
 
@@ -68,14 +71,21 @@ public class GvrReticlePointer : GvrBasePointer {
 
   public override void OnPointerEnter(RaycastResult raycastResultResult, bool isInteractive) {
     SetPointerTarget(raycastResultResult.worldPosition, isInteractive);
+		gazedAt	= raycastResultResult.gameObject;
+		gazeStartTime = Time.time;
   }
 
   public override void OnPointerHover(RaycastResult raycastResultResult, bool isInteractive) {
     SetPointerTarget(raycastResultResult.worldPosition, isInteractive);
+		if (gazedAt != null && gazeStartTime > 0f) {
+			if (Time.time - gazeStartTime > 2.0f && ExecuteEvents.CanHandleEvent<TimedInputHandler> (gazedAt)) {
+				ExecuteEvents.Execute (gazedAt, null, (TimedInputHandler handler, BaseEventData data) => handler.HandleTimedInput ());
+			}
+		}
   }
 
   public override void OnPointerExit(GameObject previousObject) {
-    ReticleDistanceInMeters = RETICLE_DISTANCE_MAX;
+		ReticleDistanceInMeters = RETICLE_DISTANCE_MIN; //RETICLE_DISTANCE_MAX
     ReticleInnerAngle = RETICLE_MIN_INNER_ANGLE;
     ReticleOuterAngle = RETICLE_MIN_OUTER_ANGLE;
   }
@@ -127,7 +137,8 @@ public class GvrReticlePointer : GvrBasePointer {
 
   protected override void Start() {
     base.Start();
-
+		gazeStartTime = -1f;
+		gazedAt = null;
     Renderer rendererComponent = GetComponent<Renderer>();
     rendererComponent.sortingOrder = reticleSortingOrder;
 
