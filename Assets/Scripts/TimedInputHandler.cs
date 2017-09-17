@@ -5,5 +5,4 @@ using UnityEngine.EventSystems;
 
 public interface TimedInputHandler : IEventSystemHandler {
 	void HandleTimedInput();
-
 }

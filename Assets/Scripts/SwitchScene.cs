@@ -13,7 +13,5 @@ public class SwitchScene : MonoBehaviour, TimedInputHandler {
 
 	public void HandleTimedInput() {
 		SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
-		//Application.LoadLevel(sceneName);
-
 	}
 }
